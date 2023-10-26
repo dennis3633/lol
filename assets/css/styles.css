@@ -507,16 +507,56 @@ button{
 
 
 /*=============== ABOUT ===============*/
-.about__container{
-  row-gap: 2rem;
+/* Style for the Remote Work Tips section */
+.about {
+  background: var(--body-color);
+  color: #fff;
+  padding: 60px 0;
 }
 
-.about__data{
+.about__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  background: var(--container-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.about__description{
-  margin-bottom: var(--mb-2);
+.about__data {
+  max-width: 600px;
+}
+
+.about__title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.about__description {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.remote__tips {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.remote__tips li {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+  .about__container {
+      text-align: center;
+  }
 }
 
 .about__img{
@@ -524,6 +564,18 @@ button{
   justify-self: center;
   animation: floating 2s ease-in-out infinite;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 /* TRICK OR TREAT Section - Enhanced Design */
 /*=============== TRICK OR TREAT ===============*/
 .trick__container{
