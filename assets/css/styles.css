@@ -387,30 +387,124 @@ button{
   align-items: center;
   column-gap: .5rem;
 }
+/* Ultra-Modern CSS with Custom Gradients for the Category Section */
 
-/*=============== CATEGORY ===============*/
-.category__container{
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem 2rem;
+/* Category Container Background Gradient */
+.category__container {
+  background: var(--container-color);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.category__data{
+/* Category Data Container */
+.category__data {
+  flex: 0 0 calc(33.33% - 20px);
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  background: var(--body-color);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
 }
 
-.category__img{
-  width: 120px;
-  margin-bottom: var(--mb-0-75);
-  transition: .3s;
+/* Category Data Hover Effect */
+.category__data:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
 }
 
-.category__title{
-  margin-bottom: var(--mb-0-25);
+/* Category Image Styling */
+.category__img {
+  width: 100%;
+  height: auto;
+  max-width: 160px;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  filter: grayscale(20%); /* Subtle grayscale effect */
+  transition: transform 0.3s;
 }
 
-.category__data:hover .category__img{
-  transform: translateY(-.5rem);
+/* Image Hover Effect */
+.category__data:hover .category__img {
+  transform: scale(1.05);
+  filter: grayscale(0); /* Remove grayscale on hover */
 }
+
+/* Category Title Styling */
+.category__title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 15px 0;
+  text-transform: uppercase;
+}
+
+/* Category Subtitle Styling */
+.category__subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+/* Price Styling */
+.category__price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+/* Button Styling */
+.category__button {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 16px 32px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category__button:hover {
+  background-color: #ff5500;
+}
+
+/* Responsive Styling for Category Data */
+@media screen and (max-width: 1024px) {
+  .category__data {
+      flex: 0 0 calc(50% - 20px);
+  }
+}
+
+/* Mobile Responsive Styling for Category Data */
+@media screen and (max-width: 768px) {
+  .category__data {
+      flex: 0 0 calc(50% - 20px);
+      margin: 1rem;
+  }
+}
+
+/* Further Mobile Responsive Styling for Smaller Devices */
+@media screen and (max-width: 480px) {
+  .category__data {
+      flex: 0 0 calc(100% - 40px);
+  }
+}
+
 
 /*=============== ABOUT ===============*/
 .about__container{
@@ -430,7 +524,7 @@ button{
   justify-self: center;
   animation: floating 2s ease-in-out infinite;
 }
-
+/* TRICK OR TREAT Section - Enhanced Design */
 /*=============== TRICK OR TREAT ===============*/
 .trick__container{
   grid-template-columns: repeat(2, 1fr);
@@ -490,7 +584,6 @@ button{
 .trick__content:hover .trick__button{
   right: 0;
 }
-
 /*=============== DISCOUNT ===============*/
 .discount__container{
   background: var(--container-color);
