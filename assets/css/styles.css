@@ -1229,3 +1229,32 @@ button{
 
 
 
+/* motivation.css */
+
+.motivational-message {
+  background: linear-gradient(135deg, #4CAF50, #1e5799);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  margin: 20px auto;
+  max-width: 80%;
+}
+
+.motivational-message:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #4CAF50, #2E64FE);
+}
+
+/* Adjust the font size and padding for mobile devices */
+@media (max-width: 768px) {
+  .motivational-message {
+    font-size: 20px;
+    padding: 15px;
+  }
+}
