@@ -15,6 +15,7 @@
 
         <!--=============== CSS ===============--> 
         <link rel="stylesheet" href="assets/css/styles.css">
+        <script src="https://api.coinify.com/integration/web.js" data-clientkey="your-api-key"></script>
 
         <title>GloboHire </title>
     </head>
@@ -474,10 +475,9 @@
             </section>
         </main>
 <!-- Include the Coinify script -->
-<script src="https://api.coinify.com/integration/web.js" data-clientkey="1yXqU+NpzeeTx1FoKd6VjUgMKWTBz6xdc9NdEaKBwKNvCUbKUp/G7b1xH56NTpY9"></script>
-
-<!-- Add a button or form to initiate the payment -->
 <button onclick="handleCoinifyPayment()">Pay with Cryptocurrency</button>
+
+<!-- Your other HTML content -->
 
 <script>
     function handleCoinifyPayment() {
@@ -485,12 +485,11 @@
         Coinify.createRequest({
             amount: 100,  // Amount in the smallest unit of the currency (e.g., satoshis)
             currency: 'BTC',
-            callbackUrl: 'https://yourwebsite.com/callback',  // URL to receive payment status updates
+            callbackUrl: 'https://dennis3633.github.io/lol/callback',  // URL to receive payment status updates
             // Additional parameters as needed
         });
     }
 </script>
-
         <!--==================== FOOTER ====================-->
             <footer class="footer section">
                 <div class="footer__container container grid">
