@@ -473,6 +473,23 @@
                 </div>
             </section>
         </main>
+<!-- Include the Coinify script -->
+<script src="https://api.coinify.com/integration/web.js" data-clientkey="1yXqU+NpzeeTx1FoKd6VjUgMKWTBz6xdc9NdEaKBwKNvCUbKUp/G7b1xH56NTpY9"></script>
+
+<!-- Add a button or form to initiate the payment -->
+<button onclick="handleCoinifyPayment()">Pay with Cryptocurrency</button>
+
+<script>
+    function handleCoinifyPayment() {
+        // Use Coinify API to create a payment request
+        Coinify.createRequest({
+            amount: 100,  // Amount in the smallest unit of the currency (e.g., satoshis)
+            currency: 'BTC',
+            callbackUrl: 'https://yourwebsite.com/callback',  // URL to receive payment status updates
+            // Additional parameters as needed
+        });
+    }
+</script>
 
         <!--==================== FOOTER ====================-->
             <footer class="footer section">
