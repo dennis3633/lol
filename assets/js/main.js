@@ -103,6 +103,48 @@ sr.reveal(`.about__img, .discount__data`,{origin: 'right'})
 
 
 
+// Replace 'YOUR_API_KEY' with your actual News API key
+const apiKey = '0d40fc489267451db9411501de3fd0a5';
+const apiUrl = 'https://newsapi.org/v2/top-headlines';
+
+// Define your query parameters
+const country = 'US'; // Replace with your desired country code
+const category = 'technology'; // Replace with your desired category
+const pageSize = 5; // Number of articles to fetch
+
+// Construct the URL
+const url = `${apiUrl}?country=${country}&category=${category}&pageSize=${pageSize}&apiKey=${apiKey}`;
+
+// Function to display news articles
+function displayNews(articles) {
+  const newsContainer = document.getElementById('news-container');
+  articles.forEach(article => {
+    const articleDiv = document.createElement('div');
+    articleDiv.classList.add('article');
+
+    const title = document.createElement('h2');
+    title.textContent = article.title;
+
+    const description = document.createElement('p');
+    description.textContent = article.description;
+
+    articleDiv.appendChild(title);
+    articleDiv.appendChild(description);
+
+    newsContainer.appendChild(articleDiv);
+  });
+}
+
+// Fetch news data
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    const articles = data.articles;
+    displayNews(articles);
+  })
+  .catch(error => {
+    console.error('Error fetching news data:', error);
+  });
 
 
 
