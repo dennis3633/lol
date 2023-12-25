@@ -98,57 +98,87 @@ sr.reveal(`.category__data, .trick__content, .footer__content`,{interval: 100})
 sr.reveal(`.about__data, .discount__img`,{origin: 'left'})
 sr.reveal(`.about__img, .discount__data`,{origin: 'right'})
 
+document.addEventListener('DOMContentLoaded', function() {
+    fetchNews();
+});
 
+function fetchNews() {
+    const apiKey = '0d40fc489267451db9411501de3fd0a5'; // Your News API key
+    const query = 'Microsoft'; // Example query
+    const date = '2023-12-24'; // Example date
+    const language = 'en'; // Example language
+    const sortBy = 'publishedAt'; // Example sorting method
 
+    const url = `https://newsapi.org/v2/everything?q=${query}&from=${date}&language=${language}&sortBy=${sortBy}&apiKey=${apiKey}`;
 
-
-
-// Replace 'YOUR_API_KEY' with your actual News API key
-const apiKey = '0d40fc489267451db9411501de3fd0a5';
-const apiUrl = 'https://newsapi.org/v2/top-headlines';
-
-// Define your query parameters
-const country = 'US'; // Replace with your desired country code
-const category = 'technology'; // Replace with your desired category
-const pageSize = 5; // Number of articles to fetch
-
-// Construct the URL
-const url = `${apiUrl}?country=${country}&category=${category}&pageSize=${pageSize}&apiKey=${apiKey}`;
-
-// Function to display news articles
-function displayNews(articles) {
-  const newsContainer = document.getElementById('news-container');
-  articles.forEach(article => {
-    const articleDiv = document.createElement('div');
-    articleDiv.classList.add('article');
-
-    const title = document.createElement('h2');
-    title.textContent = article.title;
-
-    const description = document.createElement('p');
-    description.textContent = article.description;
-
-    articleDiv.appendChild(title);
-    articleDiv.appendChild(description);
-
-    newsContainer.appendChild(articleDiv);
-  });
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => displayNews(data.articles))
+        .catch(error => {
+            console.error('Error fetching news:', error);
+            handleErrors(error);
+        });
 }
 
-// Fetch news data
-fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    const articles = data.articles;
-    displayNews(articles);
-  })
-  .catch(error => {
-    console.error('Error fetching news data:', error);
-  });
+function displayNews(articles) {
+    const newsContainer = document.getElementById('news-container');
+    newsContainer.innerHTML = '';
+
+    articles.forEach(article => {
+        const articleElement = document.createElement('div');
+        articleElement.classList.add('news-article');
+        articleElement.innerHTML = `
+            <h3>${article.title}</h3>
+            <p>${article.description}</p>
+            <a href="${article.url}" target="_blank">Read more</a>
+        `;
+        newsContainer.appendChild(articleElement);
+    });
+}
+
+function handleErrors(error) {
+    const newsContainer = document.getElementById('news-container');
+    newsContainer.innerHTML = `<p>Failed to load news: ${error.message}. Please try again later.</p>`;
+}
+
+// ... (any additional JavaScript code you may have) ...
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    const countries = ['kenya', 'uganda', 'nigeria', 'usa', 'china', 'canada'];
+    countries.forEach(fetchCountryData);
+});
 
+function fetchCountryData(countryName) {
+    fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+        .then(response => response.json())
+        .then(countryData => {
+            if (countryData && countryData.length > 0) {
+                displayCountry(countryData[0]); // Display the first result
+            }
+        })
+        .catch(error => console.error('Error fetching data for ' + countryName, error));
+}
 
-
-
+function displayCountry(country) {
+    const container = document.getElementById('countries-section');
+    const countryElement = document.createElement('div');
+    countryElement.className = 'country-card';
+    countryElement.innerHTML = `
+        <div class="country-flag">
+            <img src="${country.flags.svg}" alt="Flag of ${country.name.common}">
+        </div>
+        <div class="country-details">
+            <h3 class="country-name">${country.name.common}</h3>
+            <p class="country-info">Population: ${country.population.toLocaleString()}</p>
+            <p class="country-info">Capital: ${country.capital}</p>
+        </div>
+    `;
+    container.appendChild(countryElement);
+}
 
