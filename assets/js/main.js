@@ -150,23 +150,37 @@ function handleErrors(error) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    const countries = ['kenya', 'uganda', 'nigeria', 'usa', 'china', 'canada'];
-    countries.forEach(fetchCountryData);
+    const globohireCountries = ['usa', 'canada', 'india', 'germany', 'australia', 'brazil','kenya','nigeria','india'];
+    fetchCountries(globohireCountries);
+
+    document.getElementById('country-search').addEventListener('input', function(e) {
+        fetchCountries(globohireCountries, e.target.value.toLowerCase());
+    });
 });
 
-function fetchCountryData(countryName) {
-    fetch(`https://restcountries.com/v3.1/name/${countryName}`)
-        .then(response => response.json())
-        .then(countryData => {
-            if (countryData && countryData.length > 0) {
-                displayCountry(countryData[0]); // Display the first result
-            }
-        })
-        .catch(error => console.error('Error fetching data for ' + countryName, error));
+function fetchCountries(countries, filter = '') {
+    const container = document.getElementById('countries-section');
+    container.innerHTML = '';
+
+    countries.forEach(countryName => {
+        fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const country = data[0];
+                    if (country.name.common.toLowerCase().includes(filter)) {
+                        displayCountry(container, country);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                container.innerHTML = `<p class="error-message">Failed to load country data. Please try again later.</p>`;
+            });
+    });
 }
 
-function displayCountry(country) {
-    const container = document.getElementById('countries-section');
+function displayCountry(container, country) {
     const countryElement = document.createElement('div');
     countryElement.className = 'country-card';
     countryElement.innerHTML = `
@@ -175,10 +189,11 @@ function displayCountry(country) {
         </div>
         <div class="country-details">
             <h3 class="country-name">${country.name.common}</h3>
-            <p class="country-info">Population: ${country.population.toLocaleString()}</p>
             <p class="country-info">Capital: ${country.capital}</p>
+            <p class="country-info">Region: ${country.region}</p>
         </div>
     `;
     container.appendChild(countryElement);
 }
+
 
