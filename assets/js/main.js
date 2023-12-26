@@ -150,50 +150,48 @@ function handleErrors(error) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    const globohireCountries = ['usa', 'canada', 'india', 'germany', 'australia', 'brazil','kenya','nigeria','india'];
-    fetchCountries(globohireCountries);
+    const globohireCountries = [
+        'usa', 'canada', 'india', 'germany', 'australia', 'brazil', 
+        'kenya', 'nigeria', 'japan', 'china', 'france', 'italy', 
+        'spain', 'mexico', 'russia', 'south africa', 'egypt', 
+        'argentina', 'indonesia', 'turkey', 'sweden', 
+        'ghana', 'tanzania', 'south africa', 'egypt'
+    ];
+    let countriesData = {};
 
-    document.getElementById('country-search').addEventListener('input', function(e) {
-        fetchCountries(globohireCountries, e.target.value.toLowerCase());
-    });
-});
-
-function fetchCountries(countries, filter = '') {
-    const container = document.getElementById('countries-section');
-    container.innerHTML = '';
-
-    countries.forEach(countryName => {
-        fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+    Promise.all(globohireCountries.map(countryName => {
+        return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
             .then(response => response.json())
             .then(data => {
                 if (data && data.length > 0) {
-                    const country = data[0];
-                    if (country.name.common.toLowerCase().includes(filter)) {
-                        displayCountry(container, country);
-                    }
+                    countriesData[countryName] = data[0];
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                container.innerHTML = `<p class="error-message">Failed to load country data. Please try again later.</p>`;
             });
+    })).then(() => {
+        displayCountries(Object.values(countriesData));
     });
-}
 
-function displayCountry(container, country) {
-    const countryElement = document.createElement('div');
-    countryElement.className = 'country-card';
-    countryElement.innerHTML = `
-        <div class="country-flag">
-            <img src="${country.flags.svg}" alt="Flag of ${country.name.common}">
-        </div>
-        <div class="country-details">
-            <h3 class="country-name">${country.name.common}</h3>
-            <p class="country-info">Capital: ${country.capital}</p>
-            <p class="country-info">Region: ${country.region}</p>
-        </div>
-    `;
-    container.appendChild(countryElement);
-}
+    document.getElementById('country-search').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredCountries = Object.values(countriesData).filter(country => 
+            country.name.common.toLowerCase().includes(searchTerm));
+        displayCountries(filteredCountries);
+    });
+});
 
+function displayCountries(countries) {
+    const container = document.getElementById('countries-section');
+    container.innerHTML = countries.map(country => `
+        <div class="country-card">
+            <div class="country-flag">
+                <img src="${country.flags.svg}" alt="Flag of ${country.name.common}">
+            </div>
+            <div class="country-details">
+                <h3 class="country-name">${country.name.common}</h3>
+                <p class="country-info">Capital: ${country.capital}</p>
+                <p class="country-info">Region: ${country.region}</p>
+            </div>
+        </div>
+    `).join('');
+}
 
